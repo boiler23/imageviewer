@@ -2,10 +2,17 @@ package example.imageviewer
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import example.imageviewer.model.*
 import example.imageviewer.view.*
 
@@ -122,5 +129,9 @@ fun ImageViewerWithProvidedDependencies(
                 )
             }
         }
+    }
+
+    Box(Modifier.fillMaxWidth().padding(vertical = 32.dp)) {
+        Text("Device: ${getDevice().name}", color = Color.White)
     }
 }
