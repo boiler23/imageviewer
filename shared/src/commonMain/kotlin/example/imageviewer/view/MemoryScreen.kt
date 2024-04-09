@@ -13,6 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
@@ -29,13 +30,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import example.imageviewer.*
 import example.imageviewer.LocalImageProvider
 import example.imageviewer.LocalSharePicture
 import example.imageviewer.filter.getPlatformContext
 import example.imageviewer.icon.IconAutoFixHigh
-import example.imageviewer.isShareFeatureSupported
 import example.imageviewer.model.*
-import example.imageviewer.shareIcon
 import example.imageviewer.style.ImageviewerColors
 
 @Composable
@@ -83,7 +83,8 @@ fun MemoryScreen(
             }
             Box(modifier = Modifier.background(MaterialTheme.colors.background)) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Headliner("Note")
+                    val clipboard = rememberClipboardController()
+                    Headliner("Note") { clipboard.copy(picture.description) }
                     Collapsible(picture.description, onEdit = { edit = true })
                     Headliner("Related memories")
                     val shuffledIndices = remember {
@@ -279,12 +280,19 @@ fun Collapsible(s: String, onEdit: () -> Unit) {
 }
 
 @Composable
-fun Headliner(s: String) {
+fun Headliner(s: String, onCopyClicked: (() -> Unit)? = null) = Row(
+    modifier = Modifier.padding(start = 12.dp, top = 32.dp, end = 12.dp, bottom = 16.dp),
+    verticalAlignment = Alignment.CenterVertically,
+) {
     Text(
         text = s,
         fontWeight = FontWeight.SemiBold,
         fontSize = 20.sp,
         color = Color.Black,
-        modifier = Modifier.padding(start = 12.dp, top = 32.dp, end = 12.dp, bottom = 16.dp)
     )
+    if (onCopyClicked != null) {
+        IconButton(onClick = onCopyClicked) {
+            Icon(Icons.Outlined.ContentCopy, contentDescription = null)
+        }
+    }
 }

@@ -33,6 +33,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
+            implementation(compose.materialIconsExtended)
             implementation(compose.components.resources)
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
